@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Button, TextInput, TouchableOpacity, FlatList, Alert, Modal } from 'react-native'
+import { View, Text, StyleSheet, Image, Button, TextInput, TouchableOpacity, FlatList, Alert, Modal } from 'react-native'
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, editTodo, deleteTodo } from '../features/todoSlice';
+import { addTodo, editTodo, deleteTodo } from '../redux/features/todoSlice';
 import styles from '../css/TodoScreen';
 
 // const styles = StyleSheet.create({
@@ -160,7 +160,7 @@ const TodoScreen = () => {
     const [editingTodo, setEditingTodo] = useState(null);
     const dispatch = useDispatch();
     const todoList = useSelector((state) => state.inputSlice.todoData)
-    console.log("kkkkkklllll",todoList);
+    console.log("kkkkkklllll", todoList);
 
 
     const handleAddTodo = () => {
@@ -177,19 +177,19 @@ const TodoScreen = () => {
 
     const handleEditTodo = () => {
         console.log(editTodo);
-        
+
         if (editingTodo && editingTodo.title.trim()) {
             console.log(editingTodo);
 
             dispatch(editTodo({ id: editingTodo.id, newTitle: editingTodo.title }));
             setEditingTodo(null);
-            setModalVisible(false); 
+            setModalVisible(false);
         }
     };
 
-    const handleDeleteTodo=(id)=>{
-        console.log("Id in delete : ",id);
-        
+    const handleDeleteTodo = (id) => {
+        console.log("Id in delete : ", id);
+
         dispatch(deleteTodo(id))
     }
 
@@ -199,7 +199,7 @@ const TodoScreen = () => {
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)} 
+                onRequestClose={() => setModalVisible(false)}
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
@@ -232,7 +232,7 @@ const TodoScreen = () => {
 
             <FlatList
                 data={todoList}
-                // horizontal
+                // horizontalr
                 // showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => (
                     <View style={styles.viewStyle} key={index}>
@@ -242,19 +242,25 @@ const TodoScreen = () => {
                                 title='Edit'
                                 color="#e76245"
                                 onPress={() => {
-                                    setEditingTodo(item); 
+                                    setEditingTodo(item);
                                     setModalVisible(true);
                                 }}
                             />
                             <Button
                                 title="Delete"
                                 color="#841584"
-                                onPress={()=> {handleDeleteTodo(item.id)}}
+                                onPress={() => { handleDeleteTodo(item.id) }}
                             />
                         </View>
                     </View>
                 )}
             />
+            <View style={{display: "flex", justifyContent: "center"}}>
+                {todoList.length <= 0 && <Image
+                    style={{ width: 300, height: 300 }}
+                    source={require("../../assets/todo.png")} />}
+            </View>
+
         </View>
     )
 }

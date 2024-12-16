@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         paddingVertical: 10,
         paddingHorizontal: 16,
-        width: "90%"
+        width: "100%"
     },
     addButtonStyle: {
         backgroundColor: "#000",
