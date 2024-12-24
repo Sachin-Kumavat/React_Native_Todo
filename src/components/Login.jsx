@@ -12,7 +12,7 @@ const Login = (props) => {
         // console.log(email);
         // console.log(password);
 
-        const url = "http://10.0.2.2:3000/users"
+        const url = "http://172.16.0.214:3000/users"
         // const url = "https://mocki.io/v1/c268d6a8-c6aa-45fa-83f5-f4b7f482b5ca"
         let result = fetch(url, {
             method: "POST",

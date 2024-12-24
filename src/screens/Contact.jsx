@@ -1,33 +1,65 @@
 import { View, Text, KeyboardAvoidingView, TextInput, StyleSheet, TouchableOpacity, Button, Alert, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import CheckBox from 'react-native-check-box';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../redux/features/todoSlice';
+import axios from 'axios';
 
 const Contact = () => {
+  const dispatch = useDispatch()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [comment, setComment] = useState("")
-  const saveData = () => {
 
-    const url = "http://172.16.0.179:3000/users"
+  const saveData = async () => {
+    console.log("vhhf");
+    const res = {
+      name: "jaskdf Yadav",
+      email: "vishalyadav83@gmail.com",
+      comment: "vishsjdjsalyadav@514"
+  }
+
+    // Alert.alert("Data filled successfully")
+    const url = "http://172.16.0.214:3000/users"
     // const url = "https://mocki.io/v1/c268d6a8-c6aa-45fa-83f5-f4b7f482b5ca"
-    let result = fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, email, comment })
-    })
-    setName("");
-    setEmail("");
-    setComment("")
+    // try {
+    //   const result = await axios.post(url, {
+    //    res
+    //   },
+    //   {
+    //     headers: {
+    //       "Content-Type":"application/json"
+    //     }
+    //   });
+    //   setName("");
+    //   setEmail("");
+    //   setComment("");
+    //   const data = result.data
+    //   console.log("contact data :", data)
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    try {
+      const result = await axios.post(url, res, {
+        headers: {
+                "Content-Type":"application/json"
+              }
+      }).then(
+        console.log('success', result)
+      ).catch((err)=> console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
 
-    console.log("Data send successfully");
-
-    console.log(result);
-
-    Alert.alert("Data filled successfully")
 
   }
+
+  // const saveData=()=>{
+  //   dispatch(addContact({name, email, comment}))
+  //   setName("");
+  //   setEmail("");
+  //   setComment("")
+  // }
 
 
   return (
@@ -62,14 +94,6 @@ const Contact = () => {
 
           <TouchableOpacity
             style={styles.loginbtnStyle}
-          // style={[
-          //     styles.buttonStyle,
-          //     {
-          //         backgroundColor: agreed ? "#4630EB" : "grey",
-          //     },
-          // ]}
-          // disabled={!isChecked}
-          //  pointerEvents={isChecked ? "auto" : "none"}
           >
             <Text style={styles.buttonText} onPress={saveData}>Submit</Text>
           </TouchableOpacity>

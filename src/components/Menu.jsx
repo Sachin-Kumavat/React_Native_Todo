@@ -8,7 +8,7 @@ const Menu = () => {
     <View style={styles.mainContainer}>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={() => navigation.navigate("Course")}
+        onPress={() => navigation.navigate("Products")}
       >
         <Image style={styles.iconStyle} source={require("../../assets/course.png")} />
       </TouchableOpacity>
@@ -23,7 +23,7 @@ const Menu = () => {
 
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={() => navigation.navigate("About")}
+        onPress={() => navigation.navigate("Cart")}
       >
         <Image style={styles.iconStyle} source={require("../../assets/cart.png")} />
 
@@ -39,6 +39,13 @@ const Menu = () => {
       <TouchableOpacity
         style={styles.buttonStyle}
         onPress={() => navigation.navigate("Contact")}
+      >
+        <Image style={styles.iconStyle} source={require("../../assets/contact.png")} />
+
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={() => navigation.navigate("Date")}
       >
         <Image style={styles.iconStyle} source={require("../../assets/contact.png")} />
 

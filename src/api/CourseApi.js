@@ -8,7 +8,9 @@ const CourseApi = [
         course2: "React Native",
         course3: "Spring Boot",
         course4: "NodeJs",
-        Price: 999
+        ratings: 4.8,
+        Price: 999,
+        delivery : "FREE delivery Wed, 25 Dec Or fastest delivery Tomorrow, 21 Dec"
     },
     {
         id: "2",
@@ -19,8 +21,11 @@ const CourseApi = [
         course2: "React Native",
         course3: "Spring Boot",
         course4: "NodeJs",
-        Price: 899
+        ratings: 4.9,
+        Price: 899,
+        
     },
+    
     {
         id: "3",
         title: "NodeJs Development",
@@ -30,6 +35,7 @@ const CourseApi = [
         course2: "React Native",
         course3: "Spring Boot",
         course4: "NodeJs",
+        ratings: 3.9,
         Price: 899
     },
     {
@@ -41,6 +47,7 @@ const CourseApi = [
         course2: "React Native",
         course3: "Spring Boot",
         course4: "NodeJs",
+        ratings: 2.5,
         Price: 899
     },
     {
@@ -52,6 +59,7 @@ const CourseApi = [
         course2: "React Native",
         course3: "Spring Boot",
         course4: "NodeJs",
+        ratings: 3.7,
         Price: 1999
     },
 ]

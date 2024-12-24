@@ -1,24 +1,40 @@
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import Menu from '../components/Menu';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setIsLoginAsync } from '../redux/features/authSlice';
 
 const Home = (props) => {
-    const navigation = useNavigation()
-    // const [name, setName] = useState("");
-    // const getName = async () => {
-    //     const storedName = await AsyncStorage.getItem('NAME');
-    //     setName(storedName);
-    // }
+    const navigation = useNavigation();
+    const dispatch = useDispatch()
+    const [name, setName] = useState("");
+    const [asyncImage, setAsyncImage] = useState(null);
+    const getName = async () => {
+        const storedName = await AsyncStorage.getItem('NAME');
+        const imageAsync = await AsyncStorage.getItem("IMAGE");
+        setAsyncImage(JSON.parse(imageAsync))
+        setName(storedName);
+    }
 
-    // useEffect(() => {
-    //     getName();
-    // }, [])
+    useEffect(() => {
+        getName();
+    }, [name])
 
 
-    const { name } = useSelector((state) => state.authSlice)
-    console.log("authData from home:", name);
+    const logOut=()=>{
+        dispatch(setIsLoginAsync(false));
+    }
+
+    // console.log("jgjhfjhfggh", name)
+
+    // const name = AsyncStorage.getItem('NAME');
+    // console.log("fdfhdfgdfgd", name)
+
+
+    // const { name } = useSelector((state) => state.authSlice)
+    // console.log("authData from home:", name);
 
     // const {name} = route.params;
     // const user = JSON.stringify(name)
@@ -29,9 +45,14 @@ const Home = (props) => {
                 <View style={styles.homeTop}>
                     <View style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 5 }}>
                         <Text style={{ fontSize: 20, fontWeight: "500" }}>Welcome <Text style={{ fontSize: 18, color: "#ee4fca" }}>{name ? name : "User"}</Text></Text>
-                        <TouchableOpacity onPress={()=> navigation.navigate("LoginPage")}>
-                            <Image style={{ width: "6%", height: 20, aspectRatio: 1 }} source={require("../../assets/logout.png")} />
-                        </TouchableOpacity>
+                        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", paddingHorizontal: 10 }}>
+                            <TouchableOpacity onPress={()=> navigation.navigate("UserProfile")} >
+                                <Image style={{ width: 35, height: 35, backgroundColor: "#fff", marginHorizontal: 10, borderRadius: 20 }} source={{uri : asyncImage}} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => logOut() }>
+                                <Image style={{ width: "6%", height: 20, aspectRatio: 1 }} source={require("../../assets/logout.png")} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <Image resizeMethod='contain' style={styles.headerImage} source={require("../../assets/classroom.jpg")} />
                     <Text style={styles.mainHeader}>Welcome to</Text>

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { signUp } from '../redux/features/authSlice';
 
 const SignUp = () => {
+
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [name, setName] = useState("");
@@ -60,12 +61,11 @@ const SignUp = () => {
         } else {
             setWrongConfirmPassword(false);
         }
-        
+
         if (isValid) {
-            saveData(); 
+            saveData();
         }
-    }; 
-     console.log("wugsyuwswj:",name)
+    };
 
     const saveData = async () => {
         try {
@@ -73,9 +73,11 @@ const SignUp = () => {
             await AsyncStorage.setItem('EMAIL', email);
             await AsyncStorage.setItem('PHONE', phone);
             await AsyncStorage.setItem('PASSWORD', password);
+            // await AsyncStorage.setItem("ISLOGIN", false);
+
             // console.log("Stored Email:", email);
             // console.log("Stored Password:", password);
-            dispatch(signUp({name,email,phone,password}))
+            dispatch(signUp({ name, email, phone, password }))
             navigation.navigate("LoginPage");
         } catch (error) {
             console.error("Error saving data to AsyncStorage:", error);
@@ -97,7 +99,7 @@ const SignUp = () => {
                     onChangeText={(e) => setName(e)}
                 />
                 {wrongName && <Text style={styles.errorText}>Please Enter Name</Text>}
-                
+
                 <CustomTextInput
                     value={email}
                     placeholder={'Enter Email'}
@@ -105,7 +107,7 @@ const SignUp = () => {
                     onChangeText={(e) => setEmail(e)}
                 />
                 {wrongEmail && <Text style={styles.errorText}>Please Enter Email Id</Text>}
-                
+
                 <CustomTextInput
                     keyboardType={'number-pad'}
                     value={phone}
@@ -114,7 +116,7 @@ const SignUp = () => {
                     onChangeText={(e) => setPhone(e)}
                 />
                 {wrongPhone && <Text style={styles.errorText}>Please Enter Phone</Text>}
-                
+
                 <CustomTextInput
                     value={password}
                     placeholder={'Enter Password'}
@@ -123,7 +125,7 @@ const SignUp = () => {
                     onChangeText={(e) => setPassword(e)}
                 />
                 {wrongPassword && <Text style={styles.errorText}>Please Enter Password</Text>}
-                
+
                 <CustomTextInput
                     value={confirmPassword}
                     placeholder={'Enter Confirm Password'}
@@ -134,7 +136,7 @@ const SignUp = () => {
                 {wrongConfirmPassword && (
                     <Text style={styles.errorText}>Passwords do not match</Text>
                 )}
-                
+
                 <TouchableOpacity
                     style={styles.signupButton}
                     onPress={validate}

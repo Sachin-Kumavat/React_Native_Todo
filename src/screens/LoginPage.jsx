@@ -3,17 +3,19 @@ import React, { useState } from 'react'
 import CustomTextInput from '../components/CustomTextInput'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsLoginAsync } from '../redux/features/authSlice';
 
 const LoginPage = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("");
   const [wrongEmail, setWrongEmail] = useState(false);
   const [wrongPassword, setWrongPassword] = useState(false);
-  const validate = async() => {
+  const validate = async () => {
     console.log("Call hu validate functipon");
-    
+
     let valid = true;
     if (email == '') {
       setWrongEmail(true);
@@ -30,10 +32,11 @@ const LoginPage = () => {
 
     if (valid) {
       // console.log("Valid hai ye");
-      
+
       // console.log("Enterred Email:", email);
       // console.log("Enterred Password:", password);
       // Check stored credentials
+      // const isLogin = await AsyncStorage.setItem("ISLOGIN", false)
       const storedEmail = await AsyncStorage.getItem('EMAIL');
       const storedPassword = await AsyncStorage.getItem('PASSWORD');
       const storedName = await AsyncStorage.getItem('NAME');
@@ -42,13 +45,15 @@ const LoginPage = () => {
       console.log("Stored Name:", storedName);
       // const {name} = useSelector((item)=>item.authSice)
       // console.log("Name from store :", name);
-      
-      
+
+
       if (email === storedEmail && password === storedPassword) {
-        Alert.alert('Login Successful'); 
-        navigation.navigate('Home'); 
+        
+        dispatch(setIsLoginAsync(true));
+        Alert.alert('Login Successful');
+
       } else {
-        Alert.alert('Invalid email or password'); 
+        Alert.alert('Invalid email or password');
       }
     }
 
@@ -68,7 +73,7 @@ const LoginPage = () => {
         }
         <CustomTextInput placeholder={'Enter Password'} type={'password'} icon={require("../../assets/padlock.png")} value={password} onChangeText={(e) => setPassword(e)} />
         {
-          wrongPassword  && (
+          wrongPassword && (
             <Text style={{ marginTop: 10, marginLeft: 30, color: "red" }}>Please Enter Password</Text>
           )
         }
@@ -89,7 +94,7 @@ const LoginPage = () => {
         </TouchableOpacity>
 
         <Text style={{ fontSize: 18, fontWeight: "800", alignSelf: 'center', marginTop: 20, textDecorationLine: "underline" }}
-          onPress={()=>navigation.navigate("SignUp")}
+          onPress={() => navigation.navigate("SignUp")}
         >Create New Account</Text>
       </View>
     </ScrollView>
